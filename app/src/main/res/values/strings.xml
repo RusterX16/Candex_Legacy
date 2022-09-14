@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Candex</string>
+    <string name="driver_class">com.mysql.cj.jdbc.Driver</string>
+    <string name="jdbc">jdbc:mysql://</string>
+    <string name="host">45.155.171.174</string>
+    <string name="port">3306</string>
+    <string name="db_name">candex</string>
+    <string name="user">ruster</string>
+    <string name="password">kebab</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="no_desc">no-desc</string>
+</resources>
