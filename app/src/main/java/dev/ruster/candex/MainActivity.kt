@@ -1,6 +1,5 @@
 package dev.ruster.candex
 
-import android.database.Cursor
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,11 +12,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.snackbar.Snackbar
 import dev.ruster.candex.databinding.ActivityMainBinding
-import dev.ruster.candex.entities.Brand
 import dev.ruster.candex.entities.Can
-import dev.ruster.candex.entities.CanSize
 import dev.ruster.candex.io.Database
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,24 +40,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val db = Database(this, null)
-
         db.onUpgrade(db.writableDatabase, 0, 0)
-        db.insert("can")
-        val c: Cursor = db.query("SELECT * FROM can")
-        val s = c.count
-        if (c.moveToFirst()) {
-            do {
-                Can(
-                    c.getString(0).toInt(),
-                    c.getString(1),
-                    Brand.valueOf(c.getString(2)),
-                    CanSize.valueOf(c.getString(3)),
-                    c.getString(4).toBoolean(),
-                    c.getString(5).toBoolean(),
-                    c.getString(6).toBoolean()
-                )
-            } while (c.moveToNext())
-        }
+        Can.defaultInsert(db)
 
         for (can in Can.CANS) {
             setContentView(R.layout.activity_main)

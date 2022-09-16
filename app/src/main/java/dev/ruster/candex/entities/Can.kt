@@ -1,66 +1,60 @@
 package dev.ruster.candex.entities
 
-class Can {
+import android.content.ContentValues
+import dev.ruster.candex.io.Database
+
+data class Can(
+    private val id: Int,
+    private val name: String,
+    private val brand: Brand,
+    private val size: CanSize,
+    private val sparkling: Boolean,
+    private val energizer: Boolean,
+    private val sugarLess: Boolean
+) {
+    constructor(values: ContentValues) : this(
+        values.getAsInteger("id"),
+        values.getAsString("name"),
+        Brand.valueOf(values.getAsString("brand")),
+        CanSize.valueOf(values.getAsString("size")),
+        values.getAsBoolean("sparkling"),
+        values.getAsBoolean("energizer"),
+        values.getAsBoolean("sugarLess")
+    )
 
     companion object {
         val CANS: MutableList<Can> = ArrayList()
+        private const val TABLE_NAME: String = "can"
+
+        fun defaultInsert(db: Database) {
+            db.insert(
+                TABLE_NAME,
+                mapOf(
+                    "id" to 1,
+                    "name" to "Coca Cola",
+                    "brand" to "COCA_COLA",
+                    "size" to "MEDIUM_THIN",
+                    "sparkling" to 1,
+                    "energizer" to 0,
+                    "sugarLess" to 0
+                )
+            )
+        }
     }
 
-    val id: Int
-    val name: String
-    val brand: Brand
-    val size: CanSize
-    val sparkling: Boolean
-    val energizer: Boolean
-    val sugarLess: Boolean
-
-    constructor(
-        id: Int,
-        name: String,
-        brand: Brand,
-        size: CanSize,
-        sparkling: Boolean,
-        energizer: Boolean,
-        sugarLess: Boolean
-    ) {
-        this.id = id
-        this.name = name
-        this.brand = brand
-        this.size = size
-        this.sparkling = sparkling
-        this.energizer = energizer
-        this.sugarLess = sugarLess
+    init {
         CANS.add(this)
     }
 
-    constructor(
-        id: Int,
-        name: String,
-        brand: Brand,
-        size: CanSize,
-        sparkling: Boolean,
-        energizer: Boolean,
-        sugarLess: Boolean,
-        register: Boolean
-    ) {
-        this.id = id
-        this.name = name
-        this.brand = brand
-        this.size = size
-        this.sparkling = sparkling
-        this.energizer = energizer
-        this.sugarLess = sugarLess
-    }
-
     override fun toString(): String {
-        return "Can{" +
-                "id=$id," +
-                "name=$name," +
-                "brand=$brand," +
-                "size=$size," +
-                "sparkling=$sparkling," +
-                "energizer=$energizer," +
-                "sugarLess=$sugarLess," +
+        return "Can{\n" +
+                "  id=$id,\n" +
+                "  name=$name,\n" +
+                "  brand=$brand,\n" +
+                "  size=$size,\n" +
+                "  sparkling=$sparkling,\n" +
+                "  energizer=$energizer,\n" +
+                "  sugarLess=$sugarLess\n" +
                 "}"
     }
 }
