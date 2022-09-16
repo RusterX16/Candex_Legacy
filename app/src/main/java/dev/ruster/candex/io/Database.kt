@@ -14,16 +14,18 @@ class Database(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, "candex", factory, 1) {
 
     override fun onCreate(db: SQLiteDatabase) {
+        val brands: List<Brand> = ArrayList(Brand.values())
+        val sizes: List<CanSize> = ArrayList(CanSize.values())
+
         db.execSQL(
             "CREATE TABLE IF NOT EXISTS can(" +
-                    "id INTEGER," +
-                    "name TEXT NOT NULL," +
-                    "brand TEXT CHECK (brand IN ('COCA_COLA')) NOT NULL UNIQUE," +
-                    "size TEXT CHECK (size IN ('MEDIUM_THIN', 'MEDIUM_WIDE')) NOT NULL," +
+                    "id INTEGER PRIMARY KEY," +
+                    "name TEXT NOT NULL UNIQUE," +
+                    "brand TEXT CHECK (size IN ($sizes)) NOT NULL," +
+                    "size TEXT CHECK (brand IN ($brands)) NOT NULL," +
                     "sparkling INTEGER NOT NULL," +
                     "energizer INTEGER NOT NULL," +
-                    "sugarLess INTEGER NOT NULL," +
-                    "CONSTRAINT pk_can PRIMARY KEY (id));"
+                    "sugarLess INTEGER NOT NULL;"
         )
     }
 
